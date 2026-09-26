@@ -40,11 +40,6 @@ function sleep(ms: number): Promise<void> {
   return new Promise((resolve) => setTimeout(resolve, ms));
 }
 
-/** Generate a simple unique delivery ID (timestamp + random hex). */
-function newDeliveryId(): string {
-  return `wh_${Date.now().toString(36)}_${Math.random().toString(36).slice(2, 10)}`;
-}
-
 /**
  * Computes the `X-Webhook-Signature` header value for a raw request body.
  *
@@ -225,11 +220,6 @@ async function deliverToSubscription(
     });
     incrementWebhookDeadLettersTotal();
     recordWebhookDelivery('dead_letter');
-    recordDeliveryHistory(subscription, eventType, deliveryId, {
-      status: 'failure',
-      errorMessage: failureReason,
-      attemptCount: RETRY_OPTIONS.retries,
-      latencyMs: Date.now() - startedAt,
-    });
-  }
-}
+    recordDeliveryHistory(subscription,
+
+/* … truncated 184 chars — edit only what you need near the top … */
